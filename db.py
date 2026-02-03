@@ -15,15 +15,3 @@ def conectar():
 
     return s
     
-
-
-
-
-
-
-
-
-
-    
-
-

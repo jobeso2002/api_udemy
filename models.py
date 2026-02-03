@@ -19,7 +19,7 @@ class Usuario(Base):
     nombre = Column(String, nullable=False)
     apellidos = Column(String, nullable=False)
     email = Column(String, nullable=False)
-    passwords = Column(String, nullable=False)
+    password = Column(String, nullable=False)
 
     def __repr__(self):
         return f"<Usuario(id={self.id}, nombre={self.nombre}, apellidos={self.apellidos}, email={self.email}, password={self.password})" 
