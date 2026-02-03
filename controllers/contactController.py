@@ -2,7 +2,7 @@ from db import conectar
 from models import Contacto, Pertenece
 
 
-def seleccionarContacto(id_usuario,campo,orden):
+def seleccionar_Contactos(id_usuario,campo,orden):
     
     try:
         session = conectar()
@@ -18,4 +18,24 @@ def seleccionarContacto(id_usuario,campo,orden):
         print(e)
     finally:
         session.close()
+    return contactos
+
+def seleccionar_Contacto(id):
+    try:
+        session = conectar()
+        contacto = session.query(Contacto).filter(Contacto.id == id).all()[0]
+    except Exception as e:
+            print(e)
+    finally:
+            session.close
+    return contacto
+
+def busqueda_Contactos(id_usuario,value):
+    try:
+        session = conectar()
+        contactos = session.query(Contacto).join(Pertenece, Contacto.id == Pertenece.id_contacto).filter(Pertenece.id_usuario == id_usuario).filter((Contacto.nombre.ilike('%'+value+'%')) | (Contacto.apellidos.ilike('%'+value+'%')) | (Contacto.direccion.ilike('%'+value+'%')) | (Contacto.email.ilike('%'+value+'%'))).order_by(Contacto.nombre).all()
+    except Exception as e:
+            print(e)
+    finally:
+            session.close
     return contactos

@@ -6,11 +6,28 @@ import controllers.contactController as contactController
 contact_api = Blueprint('contact_api', __name__)
 
 @contact_api.route('/contactos', methods=['Get'])
-def getContacto():
+def getContactos():
     parametros = request.args
     id_usuario = parametros['id_usuario']
     campo = parametros['campo']
     orden = parametros['orden']
-    contactos = contactController.seleccionarContacto(id_usuario,campo,orden)
+    contactos = contactController.seleccionar_Contactos(id_usuario,campo,orden)
+    return jsonify(contactos)
+
+@contact_api.route('/contacto', methods=['Get'])
+def getContacto():
+    parametros = request.args
+    id_contacto = parametros['id_contacto']
+    contacto = contactController.seleccionar_Contacto(id_contacto)
+    
+    return jsonify(contacto)
+
+@contact_api.route('/contactoStr', methods=['Get'])
+def getContactoStr():
+    parametros = request.args
+    id_usuario = parametros['id_usuario']
+    value = parametros['value']
+    contactos = contactController.busqueda_Contactos(id_usuario,value)
+    
     return jsonify(contactos)
 
