@@ -31,3 +31,15 @@ def getContactoStr():
     
     return jsonify(contactos)
 
+@contact_api.route('/contacto', methods=['POST'])
+def insertContacto():
+    parametros = request.args
+    id_usuario = parametros['id_usuario']
+    nombre = parametros['nombre']
+    apellidos = parametros['apellidos']
+    direccion = parametros['direccion']
+    email = parametros['email']
+    telefono = parametros['telefono']
+    result = contactController.insertar_Contacto(id_usuario, nombre, apellidos, direccion, email, telefono)
+    
+    return jsonify({'result: ',result})
