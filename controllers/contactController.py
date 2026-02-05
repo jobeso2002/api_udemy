@@ -56,7 +56,7 @@ def seleccionar_Contacto(id):
     return contacto
 
 
-def busqueda_Contactos(id_usuario, value):
+def busqueda_contactos(id_usuario, value):
     try:
         session = conectar()
         contactos = (
@@ -75,7 +75,7 @@ def busqueda_Contactos(id_usuario, value):
     except Exception as e:
         print(e)
     finally:
-        session.close
+        session.close()
     return contactos
 
 
@@ -83,7 +83,7 @@ def insertar_Contacto(id_usuario, nombre, apellidos, direccion, email, telefono)
     try:
         contacto = Contacto(
             nombre=nombre,
-            apellidos=apellidos,
+            apellidos = apellidos,
             direccion=direccion,
             email=email,
             telefono=telefono,
@@ -98,6 +98,40 @@ def insertar_Contacto(id_usuario, nombre, apellidos, direccion, email, telefono)
         pertenece = Pertenece(id_usuario=id_usuario, id_contacto=id_contacto)
 
         session.add(pertenece)
+        session.commit()
+    except Exception as e:
+        print(e)
+        return False
+    finally:
+        session.close()
+    return True
+
+def actualizar_Contacto(id,nombre, apellidos, direccion, email, telefono):
+    try:
+        session = conectar()
+        contacto = session.query(Contacto).get(id)
+        contacto.nombre = nombre
+        contacto.apellidos = apellidos
+        contacto.direccion = direccion
+        contacto.email = email
+        contacto.telefono = telefono
+
+        session.add(contacto)
+        session.commit()
+    except Exception as e:
+        print(e)
+        return False
+    finally:
+        session.close()
+    return True
+
+def eliminar_Contacto(id_usuario,id_contacto):
+    try:
+        session = conectar()
+        session.query(Pertenece).filter(Pertenece.id_contacto == id_contacto).filter(Pertenece.id_usuario == id_usuario).delete()
+        
+        contacto = session.query(Contacto).get(id_contacto)
+        session.delete(contacto)
         session.commit()
     except Exception as e:
         print(e)

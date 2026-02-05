@@ -42,4 +42,26 @@ def insertContacto():
     telefono = parametros['telefono']
     result = contactController.insertar_Contacto(id_usuario, nombre, apellidos, direccion, email, telefono)
     
-    return jsonify({'result: ',result})
+    return jsonify({'result: ':result})
+
+@contact_api.route('/contacto', methods=['PUT'])
+def actualizarContacto():
+    parametros = request.args
+    id = parametros['id']
+    nombre = parametros['nombre']
+    apellidos = parametros['apellidos']
+    direccion = parametros['direccion']
+    email = parametros['email']
+    telefono = parametros['telefono']
+    result = contactController.actualizar_Contacto(id, nombre, apellidos, direccion, email, telefono)
+    
+    return jsonify({'result: ':result})
+
+@contact_api.route('/contacto', methods=['DELETE'])
+def deleteContacto():
+    parametros = request.args
+    id_usuario = parametros['id_usuario']
+    id_contacto = parametros['id_contacto']
+    result = contactController.eliminar_Contacto(id_usuario, id_contacto)
+    
+    return jsonify({'result: ':result})
