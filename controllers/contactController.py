@@ -52,11 +52,11 @@ def seleccionar_Contacto(id):
     except Exception as e:
         print(e)
     finally:
-        session.close
+        session.close()
     return contacto
 
 
-def busqueda_contactos(id_usuario, value):
+def busqueda_Contactos(id_usuario, value):
     try:
         session = conectar()
         contactos = (
