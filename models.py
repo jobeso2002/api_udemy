@@ -2,6 +2,7 @@ from datetime import datetime
 from dataclasses import dataclass
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.sql import func
 from dataclasses import dataclass
 
 Base = declarative_base()
@@ -41,7 +42,12 @@ class Contacto(Base):
     direccion = Column(String, nullable=False)
     email = Column(String, nullable=False)
     telefono = Column(String, nullable=False)
-    fechaCreacion = Column(DateTime, default=datetime.today())
+    fecha_creacion = Column(
+        "fecha_creacion",
+        DateTime,
+        nullable=False,
+        server_default=func.now()
+    )
 
     def __repr__(self):
         return f"<Contacto(id={self.id}, nombre={self.nombre}, apellidos={self.apellidos}, direccion={self.direccion}, email={self.email}, telefono={self.telefono}, fechaCreacion={self.fechaCreacion})" 
