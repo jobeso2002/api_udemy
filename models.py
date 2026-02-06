@@ -27,6 +27,7 @@ class Usuario(Base):
 
 @dataclass
 class Contacto(Base):
+    __allow_unmapped__ = True
     id: str
     nombre: str
     apellidos: str
@@ -50,7 +51,7 @@ class Contacto(Base):
     )
 
     def __repr__(self):
-        return f"<Contacto(id={self.id}, nombre={self.nombre}, apellidos={self.apellidos}, direccion={self.direccion}, email={self.email}, telefono={self.telefono}, fechaCreacion={self.fechaCreacion})" 
+        return f"<Contacto(id={self.id}, nombre={self.nombre}, apellidos={self.apellidos}, direccion={self.direccion}, email={self.email}, telefono={self.telefono}, fechaCreacion={self.fecha_creacion})" 
     
 @dataclass
 class Pertenece(Base):
