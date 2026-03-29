@@ -1,34 +1,31 @@
 from datetime import datetime
 from dataclasses import dataclass
 from sqlalchemy import Column, Integer, String, DateTime
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.sql import func
-from dataclasses import dataclass
+from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
 
 @dataclass
 class Usuario(Base):
+    __tablename__ = 'usuario'
+
     id: int
     nombre: str
     apellidos: str
     email: str
     password: str
 
-    __tablename__ = 'usuario'
     id = Column(Integer, primary_key=True)
     nombre = Column(String, nullable=False)
     apellidos = Column(String, nullable=False)
     email = Column(String, nullable=False)
     password = Column(String, nullable=False)
 
-    def __repr__(self):
-        return f"<Usuario(id={self.id}, nombre={self.nombre}, apellidos={self.apellidos}, email={self.email}, password={self.password})" 
-
 @dataclass
 class Contacto(Base):
-    __allow_unmapped__ = True
-    id: str
+    __tablename__ = 'contacto'
+
+    id: int
     nombre: str
     apellidos: str
     direccion: str
@@ -36,30 +33,22 @@ class Contacto(Base):
     telefono: str
     fechaCreacion: datetime
 
-    __tablename__ = 'contacto'
     id = Column(Integer, primary_key=True)
     nombre = Column(String, nullable=False)
     apellidos = Column(String, nullable=False)
     direccion = Column(String, nullable=False)
     email = Column(String, nullable=False)
     telefono = Column(String, nullable=False)
-    fecha_creacion = Column(
-        "fecha_creacion",
-        DateTime,
-        nullable=False,
-        server_default=func.now()
-    )
+    fechaCreacion = Column(DateTime, default=datetime.today)
 
-    def __repr__(self):
-        return f"<Contacto(id={self.id}, nombre={self.nombre}, apellidos={self.apellidos}, direccion={self.direccion}, email={self.email}, telefono={self.telefono}, fechaCreacion={self.fecha_creacion})" 
-    
 @dataclass
 class Pertenece(Base):
+    __tablename__ = 'pertenece'
+
     id: int
     id_usuario: int
     id_contacto: int
 
-    __tablename__ = 'pertenece'
     id = Column(Integer, primary_key=True)
     id_usuario = Column(Integer, nullable=False)
     id_contacto = Column(Integer, nullable=False)

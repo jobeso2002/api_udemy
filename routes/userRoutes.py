@@ -1,15 +1,13 @@
-from flask import Flask, jsonify, request, session
-from flask import Blueprint
+from flask import Blueprint, jsonify, request
 import controllers.userController as userController
 
 user_api = Blueprint('user_api', __name__)
 
-@user_api.route('/usuario', methods=['Get'])
+@user_api.route('/usuario', methods=['GET'])
 def getUsuario():
-    parametros = request.args
-    email = parametros['email']
-    password = parametros['password']
-    result = userController.seleccionarUsuario(email,password)
-    return jsonify({'result':result})
-        
+    email = request.args.get('email')
+    password = request.args.get('password')
 
+    result = userController.seleccionarUsuario(email, password)
+
+    return jsonify({'id_usuario': result})
